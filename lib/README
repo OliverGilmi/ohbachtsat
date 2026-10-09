@@ -54,12 +54,13 @@ temperature_difference
     zur Temperatur am Ende des vorherigen Durchlaufs. Nach der Schleife wird die
     aktuelle Temperatur gespeichert. Im ersten Durchlauf gibt es noch keinen Vergleich.
 
+Hinweis: `name` und `temperature_difference` sind noch nicht in `src/main.cpp` eingebunden.
+
 Ablauf in `src/main.cpp`
 ------------------------
 
-  setup(): blink_setup, gyro_setup, dht11Setup, setupBH1750, tempDiffSetup, OLED::instance
-  loop():  gyro_gyrometer, gyro_accelerometer, temperature_humidity, bh1750,
-           name_display, temperature_difference
+  setup(): blink_setup, gyro_setup, dht11Setup, setupBH1750, OLED::instance
+  loop():  gyro_gyrometer, gyro_accelerometer, temperature_humidity, bh1750
 
 Neues Modul hinzufügen
 ----------------------

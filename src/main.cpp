@@ -6,8 +6,6 @@
 #include "Gyro.h"
 #include "Temperature_humidity.h"
 #include "Brightness.h"
-#include "Name.h"
-#include "Temperature_difference.h"
 
 void setup() {
   
@@ -15,7 +13,6 @@ void setup() {
   gyro_setup();
   dht11Setup();
   setupBH1750();
-  tempDiffSetup();
   OLED::instance();
 }
 
@@ -24,6 +21,4 @@ void loop() {
   gyro_accelerometer();
   temperature_humidity();
   bh1750();
-  name_display();
-  temperature_difference();
 }

@@ -18,9 +18,10 @@
     ```
    Die benötigten Libraries (siehe unten) werden über `lib_deps` automatisch installiert.
 7. Board per USB anschließen und mit der Statusleiste unten arbeiten:
-    - ✔ **Build** – Projekt kompilieren
-    - → **Upload** – Programm auf das Board laden
-    - 🔌 **Serial Monitor** – serielle Ausgabe anzeigen
+    - **Speichern** - Nicht vergessen zu speichern mit STRG + S 
+    - **Build** - Projekt kompilieren
+    - **Upload** - Programm auf das Board laden
+      
 
 # Librarys
 Adafruit GFX Library by Adafruit

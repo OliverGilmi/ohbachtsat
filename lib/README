@@ -1,46 +1,57 @@
+Projekt-Module (lib)
+====================
 
-This directory is intended for project specific (private) libraries.
-PlatformIO will compile them to static libraries and link into the executable file.
+Jedes Modul liegt in einem eigenen Ordner unter `lib/`. PlatformIO kompiliert
+sie automatisch als Libraries und bindet sie ein (Library Dependency Finder).
+Eingebunden werden sie in `src/main.cpp` über den Header, z.B. `#include "Gyro.h"`.
 
-The source code of each library should be placed in a separate directory
-("lib/your_library_name/[Code]").
+Übersicht
+---------
 
-For example, see the structure of the following example libraries `Foo` and `Bar`:
+| Ordner                  | Header                    | Hardware / Aufgabe                              | Anschluss          |
+|-------------------------|---------------------------|-------------------------------------------------|--------------------|
+| `Blink`                 | `Blink.h`                 | Blinken der Board-LED (Test, dass das Board läuft) | Board-LED       |
+| `OLED`                  | `OLED.h`                  | SSD1306 OLED-Display (128x32), gemeinsam genutzt  | I2C, Adresse 0x3C |
+| `Gyro`                  | `Gyro.h`                  | Beschleunigung / Gyroskop (GY-521, MPU-6050)      | I2C, Adresse 0x68 |
+| `brightness`            | `Brightness.h`            | Lichtsensor (GY-302, BH1750), Ausgabe in Lux      | I2C, Adresse 0x23 |
+| `temperature_humidity`  | `Temperature_humidity.h`  | Temperatur und Luftfeuchtigkeit (DHT11)           | Digital-Pin D4    |
 
-|--lib
-|  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional. for custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
-|  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
-|
-|- platformio.ini
-|--src
-   |- main.c
+Module im Detail
+----------------
 
-Example contents of `src/main.c` using Foo and Bar:
-```
-#include <Foo.h>
-#include <Bar.h>
+Blink
+  - `blink_setup()`: initialisiert die LED.
+  - `blink_loop()`: lässt die LED blinken.
 
-int main (void)
-{
-  ...
-}
+OLED
+  - Singleton: `OLED::instance().getDisplay()` liefert das `Adafruit_SSD1306`-Objekt.
+  - Alle anderen Module zeichnen ihre Ausgabe über dieses eine Display.
 
-```
+Gyro
+  - `gyro_setup()`: initialisiert den MPU-6050.
+  - `gyro_accelerometer()`: liest die Beschleunigung (x, y, z) und zeigt sie an.
+  - `gyro_gyrometer()`: liest die Drehraten (x, y, z) und zeigt sie an.
 
-The PlatformIO Library Dependency Finder will find automatically dependent
-libraries by scanning project source files.
+brightness
+  - `setupBH1750()`: initialisiert den Lichtsensor.
+  - `bh1750()`: misst die Helligkeit und zeigt sie in Lux auf dem Display an.
+  - Weitere Hilfsfunktionen: `powerOn()`, `powerDown()`, `dataRegReset()`,
+    `setMode()`, `setMeasuringTime()`, `readBH1750()`, `writeBH1750()`, `getLux()`.
 
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html
+temperature_humidity
+  - `dht11Setup()`: initialisiert den DHT11 (Daten-Pin D4).
+  - `temperature_humidity()`: liest Luftfeuchtigkeit und Temperatur (°C/°F)
+    und zeigt sie an.
+
+Ablauf in `src/main.cpp`
+------------------------
+
+  setup(): blink_setup, gyro_setup, dht11Setup, setupBH1750, OLED::instance
+  loop():  gyro_gyrometer, gyro_accelerometer, temperature_humidity, bh1750
+
+Neues Modul hinzufügen
+----------------------
+
+1. Ordner `lib/<modulname>/` mit `<Modul>.h` und `<Modul>.cpp` anlegen.
+2. Header in `src/main.cpp` einbinden und die Funktionen in `setup()` / `loop()` aufrufen.
+3. Dieses README und `Sensors.md` ergänzen.

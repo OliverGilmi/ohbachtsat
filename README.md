@@ -5,7 +5,7 @@
 3. Auf das PlatformIO-Icon (Ameisenkopf) in der Seitenleiste klicken und unter *PIO Home* auf **Open** → **New Project** wählen.
 4. Das Projekt wie folgt anlegen:
     - **Name:** dein Benutzername
-    - **Board:** `Arduino Nano ATmega328` (`nanoatmega328`)
+    - **Board:** `Arduino Nano ATmega328 new` (`nanoatmega328new`)
     - **Framework:** `Arduino`
     - **Location:** Haken bei *Use default location* entfernen und den Ordner dieses Repositories wählen (oder den Standardordner nutzen und die Repository-Dateien dorthin kopieren).
 5. Auf **Finish** klicken und warten, bis PlatformIO die benötigten Toolchains heruntergeladen hat.
@@ -13,7 +13,7 @@
     ```ini
     [env:nanoatmega328]
     platform = atmelavr
-    board = nanoatmega328
+    board = nanoatmega328new
     framework = arduino
     ```
    Die benötigten Libraries (siehe unten) werden über `lib_deps` automatisch installiert.
